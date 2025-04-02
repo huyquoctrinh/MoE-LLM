@@ -43,7 +43,10 @@ During the training, firstly, we need to convert the original into the mixture o
 ### 3) Experimental Detail
 
 #### 3.1) Datastet
-To conduct the experiment, we set the training experiments on the [OpenHermes2.5 dataset](https://huggingface.co/datasets/teknium/OpenHermes-2.5/tree/main), this dataset consists of 1001551 samples of conversations primarily synthetically generated from instruction and chat samples, following the ShareGPT structure. This dataset is combined across different data sources, and it is used to train the LLama-2 model.
+
+**Training resource benchmark dataset**: To conduct the experiment, we set the training experiments on the [OpenHermes2.5 dataset](https://huggingface.co/datasets/teknium/OpenHermes-2.5/tree/main), this dataset consists of 1001551 samples of conversations primarily synthetically generated from instruction and chat samples, following the ShareGPT structure. This dataset is combined across different data sources, and it is used to train the LLama-2 model.
+
+**Intepretation test dataset**: For the testing dataset, we use the piqa, and mathqa dataset for testing the interpretation of the model. PiQA data set is the dataset that contains samples, which is mentioned about the topic. While the mathqa dataset consists of samples, which is the relevants questions and answers for the mathematic domain.
 
 #### 3.2) Hyperparameter
 
