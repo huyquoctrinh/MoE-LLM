@@ -46,7 +46,7 @@ During the training, firstly, we need to convert the original into the mixture o
 
 **Training resource benchmark dataset**: To conduct the experiment, we set the training experiments on the [OpenHermes2.5 dataset](https://huggingface.co/datasets/teknium/OpenHermes-2.5/tree/main), this dataset consists of 1001551 samples of conversations primarily synthetically generated from instruction and chat samples, following the ShareGPT structure. This dataset is combined across different data sources, and it is used to train the LLama-2 model.
 
-**Intepretation test dataset**: For the testing dataset, we use the piqa, and mathqa dataset for testing the interpretation of the model. PiQA data set is the dataset that contains samples, which is mentioned about the topic. While the mathqa dataset consists of samples, which is the relevants questions and answers for the mathematic domain.
+**Intepretation test dataset**: For the testing dataset, we use the Med-QA Alpaca, and mathqa dataset for testing the interpretation of the model. PiQA data set is the dataset that contains samples, which is mentioned about the topic. While the mathqa dataset consists of samples, which is the relevants questions and answers for the mathematic domain.
 
 #### 3.2) Hyperparameter
 
@@ -63,7 +63,7 @@ From the experiments, we did some benchmarks related of the distributed training
 | GPUs Usage | Number of steps | Training time per step (second) | Total training time | Average GPU Utilization | Average GPU memory usage|
 | ------------- | ------------- |  ------------- |  ------------- |  ------------- |  ------------- |
 | 4 x H100 80GB   | 20000  | 5.25 | About 29 hours |  ~ 82% | 73GB |
-| 4 x A100 80GB  | 20000 | 8 | About 42 hours | ~ 100% | 73GB |
+| 4 x A100 80GB  | 20000 | 8.1 | About 42 hours | ~ 100% | 73GB |
 | 2 x A100 80GB  | 20000 | None | None | OOM | OOM |
 | 2 x A100 80GB  | 20000 | None | None | OOM | OOM |
 
@@ -71,7 +71,41 @@ From the benchmark of the distributed training results, we can observe that, wit
 
 #### 4.2) Interpretation results
 
+To assess the effect of the experts in the different doing Interpretation, we have the following results:
+
+- Result on the Medical-QA dataset
+
+<div align="center">
+    <a href="./">
+        <img src="imgs/med_data.png" width="79%"/>
+    </a>
+</div>
+
+- Results on Math-QA dataset
+
+<div align="center">
+    <a href="./">
+        <img src="imgs/math_data.png" width="79%"/>
+    </a>
+</div>
+
+As can be observed, we can see that, at some of the first tokens of the dataset, each experts share the low importance to the group of tokens. However, when we go to the further group of tokens, the importance of each experts in each tokens groups are different. Some has the major contributions, while some has little contributions. Moreover, we can see that, the difference dataset will also show the different results, thus we can claim that the hyperparameter and the number of gate can affect to the overall result of the model, so it is important to choose the best optimized number of experts (as the hyperparameter).
+
 ### 5) Conclusion and Discussion
 In conclusion, in this research, we conduct the experiments to measure and evaluate the on the MoE applications on the Large Language Model. From the experiment, we can see that the training of the Large Language Model with the Mixture of Expert setup need at least 320 GB VRAM of the virtual memory of the GPUs to support the training. Beside that, we do the intepretation for the importance of the experts, and we can see that, for each knowledge domains, the experts activation has the differences, which showcases the choice for number of activated experts is very important, which should be explore further by the later research. Finally, after this project, I earned the knowledge and the general insight about the Mixture-of-Expert application in the Large Language Model, which can support me in the further research in building the model. In the future, I suggest the further works doing the architecture search to find and choose the best hyperparameter for the LLM-MoE models.
+
 ### 6) Future work
 For the future work, we aim to do the open-source and benchmark the training of the Llama-MoE model on the TPU, which support the larger range of the computation resources. Beside that, after researching and understanding the MoE architecture on the LLM, we have the design and planning to do the implementation and improve for the further research on the Multimodal-LLM.
+
+
+### Reference
+
+1. Qu, Xiaoye, et al. "Llama-moe v2: Exploring sparsity of llama from perspective of mixture-of-experts with post-training." arXiv preprint arXiv:2411.15708 (2024).
+
+2. Zhu, Tong, et al. "Llama-moe: Building mixture-of-experts from llama with continual pre-training." Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing. 2024.
+
+3. Teknium, OpenHermes 2.5: An Open Dataset of Synthetic Data for Generalist LLM Assistants, HuggingFace, 2023.
+
+4. Gao, Leo and Tow, Jonathan and Abbasi, Baber and Biderman, Stella and Black, Sid and DiPofi, Anthony and Foster, Charles and Golding, Laurence and Hsu, Jeffrey and Le Noac'h, Alain and Li, Haonan and McDonell, Kyle and Muennighoff, Niklas and Ociepa, Chris and Phang, Jason and Reynolds, Laria and Schoelkopf, Hailey and Skowron, Aviya and Sutawika, Lintang and Tang, Eric and Thite, Anish and Wang, Ben and Wang, Kevin and Zou, Andy, A framework for few-shot language model evaluation, Zenodo, 2024.
+
+5. Han, Tianyu, et al. "MedAlpaca--an open-source collection of medical conversational AI models and training data." arXiv preprint arXiv:2304.08247 (2023).
