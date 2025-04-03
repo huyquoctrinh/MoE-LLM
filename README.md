@@ -60,17 +60,18 @@ For the computing resources, we did experiments on four settings are 4 H100 GPUs
 #### 4.1) Distributed training results
 From the experiments, we did some benchmarks related of the distributed training of the LLama-MoE-V2 on different GPUs. The table below shows the evaluation of the results in the different GPUs setting
 
-| GPUs Usage | Number of steps | Training time per step | Total training time | Average GPU Utilization | Average GPU memory usage|
+| GPUs Usage | Number of steps | Training time per step (second) | Total training time | Average GPU Utilization | Average GPU memory usage|
 | ------------- | ------------- |  ------------- |  ------------- |  ------------- |  ------------- |
-| 4 x H100 80GB   | 20000  | 5.25s | About 29 hours |  ~ 82% | 73GB |
-| 4 x A100 80GB  | 20000 | 8s | About 42 hours | ~ 100% | 73GB |
-| 2 x A100 80GB  | 20000 | OOM | None | OOM | OOM |
-| 2 x A100 80GB  | 20000 | OOM | None | OOM | OOM |
+| 4 x H100 80GB   | 20000  | 5.25 | About 29 hours |  ~ 82% | 73GB |
+| 4 x A100 80GB  | 20000 | 8 | About 42 hours | ~ 100% | 73GB |
+| 2 x A100 80GB  | 20000 | None | None | OOM | OOM |
+| 2 x A100 80GB  | 20000 | None | None | OOM | OOM |
 
 From the benchmark of the distributed training results, we can observe that, with the requirements to train an MoE model with about 3.8B activated parameters the number of gpus higher than 2 two do the distributed of the model weight, gradient, and also momentum across gpus. From this observation, we can claim that, with the company or startup, if they want to conduct the training experiment with the model MoE-LLM, it is necessary to prepare the server with at lease 4 GPUs of 80GB VRAM to support the training.
 
 #### 4.2) Interpretation results
 
 ### 5) Conclusion and Discussion
-
+In conclusion, in this research, we conduct the experiments to measure and evaluate the on the MoE applications on the Large Language Model. From the experiment, we can see that the training of the Large Language Model with the Mixture of Expert setup need at least 320 GB VRAM of the virtual memory of the GPUs to support the training. Beside that, we do the intepretation for the importance of the experts, and we can see that, for each knowledge domains, the experts activation has the differences, which showcases the choice for number of activated experts is very important, which should be explore further by the later research. Finally, after this project, I earned the knowledge and the general insight about the Mixture-of-Expert application in the Large Language Model, which can support me in the further research in building the model. In the future, I suggest the further works doing the architecture search to find and choose the best hyperparameter for the LLM-MoE models.
 ### 6) Future work
+For the future work, we aim to do the open-source and benchmark the training of the Llama-MoE model on the TPU, which support the larger range of the computation resources. Beside that, after researching and understanding the MoE architecture on the LLM, we have the design and planning to do the implementation and improve for the further research on the Multimodal-LLM.
